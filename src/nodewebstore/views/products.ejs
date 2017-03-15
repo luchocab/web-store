@@ -43,7 +43,7 @@
                 <td width="23%"><%= myProducts[i].author.username %></td>
                 <td width="8%">
                   <span data-toggle="tooltip" title="Modificar" >
-                    <button type="button" class="btn btn-default btn-xs"  data-toggle="modal" data-target="#myModal"  href="/product/<%= myProducts[i].id %>/edit">
+                    <button type="button" class="btn btn-default btn-xs"  data-toggle="modal" data-target="#myModal" data-whatever="<%= myProducts[i].id %>" id="<%= myProducts[i].id %>"  href="/product/<%= myProducts[i].id %>/edit">
                       <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                     </button>
                   </span>
@@ -57,7 +57,7 @@
             </table>
         </div>
         <div class="panel-footer">
-          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"  href="/product/new">
+          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" data-whatever="new" id="new"  href="/product/new">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
           </button>
         </div>
@@ -77,11 +77,26 @@
   </body>
 
   <script>
+
+    $('#myModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var recipient = button.data('whatever'); // Extract info from data-* attributes
+      //alert($('#'+recipient).attr("href"));
+      $('.modal-content').load($('#'+recipient).attr("href"),function(result){
+      });
+    });
+    $(document).ajaxStart(function(){
+      $("body").addClass("loading");
+//      alert('aaaaa');
+    });
+    $(document).ajaxComplete(function(){
+    });
     function removeProduct(id){
       $.ajax({
         data: {id: id},
         url: '/product/delete?_method=DELETE',
         type: 'post',
+        timeout: 1000,
         success:  function (response) {
           location.reload();
           $("#delete-alert").show().fadeTo(2000, 500).slideUp(500, function(){

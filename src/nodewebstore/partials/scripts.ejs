@@ -1,13 +1,8 @@
 <! — views/partials/scripts.ejs → >
 <! — Bootstrap javascript file → >
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
+<script type="javascript">
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    });
-    $body = $("body");
-    $(document).on({
-        ajaxStart: function() { $body.addClass("loading");    },
-        ajaxStop: function() { $body.removeClass("loading"); }
     });
 </script>
