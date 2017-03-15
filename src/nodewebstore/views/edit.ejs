@@ -2,7 +2,7 @@
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title" id="myModalLabel">Editar producto</h4>
 </div>
-<form method="put" action="/product/id">
+<form method="post" action="/product?_method=PUT">
   <div class="modal-body">
     <input type="hidden" name="id" value="<%= product.id%>">
     <div class="form-group">

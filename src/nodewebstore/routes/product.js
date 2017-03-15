@@ -39,6 +39,19 @@ router.post('/new',isLoggedIn, urlParser, function(req, res, next) {
   });
 });
 
+router.put('/', urlParser, function (req, res, next) {
+
+  Product.findByIdAndUpdate(req.body.id,{$set:req.body}, function(err, result){
+    if(err)
+      return res.redirect("/error");
+    Product.find({'author' : res.locals.user.id}).populate('author').exec(function (err, data) {
+      if(err)
+        return res.redirect("/error");
+      res.render("products", {myProducts: data, saveok: true});
+    });
+  });
+});
+
 router.get('/:id/edit', function(req, res, next) {
   Product.findOne({'_id' : req.params.id}, function (err, product) {
     if(err)
@@ -63,11 +76,6 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-router.put('/:product', function (req, res, next) {
-  var product = req.product;
-  product = _.extend(product, req.body);
 
-  res.send('put products');//TODO
-});
 
 module.exports = router;
