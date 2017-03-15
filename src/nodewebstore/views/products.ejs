@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+    <div class="container">
+      <% include ../partials/nav.ejs %>
+
+      <div class="alert alert-success alert-dismissible collapse" id="add-alert" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        has agregado correctamente el nuevo producto.
+      </div>
+      <div class="alert alert-warning alert-dismissible collapse" id="delete-alert" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        has borrado correctamente el producto!
+      </div>
+      <div class="alert alert-warning alert-dismissible collapse" id="update-alert" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        has modificado correctamente el producto!
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Mis Productos</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Precio</th>
+                  <th>Autor</th>
+                </tr>
+              </thead>
+            <% for(var i = 0; i<myProducts.length; i++){ %>
+              <tr>
+                <td width="23%"><%= myProducts[i].name %></td>
+                <td width="23%"><%= myProducts[i].description %></td>
+                <td width="23%">$ <%= myProducts[i].price %></td>
+                <td width="23%"><%= myProducts[i].author.username %></td>
+                <td width="8%">
+                  <span data-toggle="tooltip" title="Modificar" >
+                    <button type="button" class="btn btn-default btn-xs"  data-toggle="modal" data-target="#myModal"  href="/product/<%= myProducts[i].id %>/edit">
+                      <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                    <input type="hidden" name="<%= myProducts[i].id %>" value="<%= myProducts[i].id %>" >
+                    <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Eliminar" onclick="removeProduct('<%= myProducts[i].id %>')">
+                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                    </button>
+                </td>
+              </tr>
+            <% } %>
+            </table>
+        </div>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"  href="/product/new">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+          </div>
+        </div>
+      </div>
+      <% include ../partials/footer.ejs %>
+      <% include ../partials/scripts.ejs %>
+    </div>
+  </body>
+
+  <script>
+    function removeProduct(id){
+      $.ajax({
+        data: {id: id},
+        url: '/product/delete?_method=DELETE',
+        type: 'post',
+        success:  function (response) {
+          location.reload();
+          $("#delete-alert").show().fadeTo(2000, 500).slideUp(500, function(){
+            $("#delete-alert").slideUp(500);
+          });
+        }
+      });
+    }
+
+    <% if(locals.saveok){%>
+    $("#save-alert").show().fadeTo(2000, 500).slideUp(500, function(){
+      $("#save-alert").slideUp(500);
+    });
+    <%}%>
+    <% if(locals.updateok){%>
+    $("#update-alert").show().fadeTo(2000, 500).slideUp(500, function(){
+      $("#update-alert").slideUp(500);
+    });
+    <%}%>
+  </script>
+</html>

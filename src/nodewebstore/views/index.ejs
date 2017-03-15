@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+    <div class="container">
+      <% include ../partials/nav.ejs %>
+      <h1>Productos</h1>
+        <div class="row">
+          <% for(var i = 0; i<products.length; i++){ %>
+          <div class="col-xs-6 col-md-4">
+            <h2><a href="/product/<%= products[i].id %>"><%= products[i].name %></a></h2>
+            <a href="#" class="thumbnail"><img src="http://placehold.it/171x180" ></a>
+          </div>
+          <% } %>
+        </div>
+      <!--<% include ../partials/3columns.ejs %>-->
+      <% include ../partials/footer.ejs %>
+      <% include ../partials/scripts.ejs %>
+    </div>
+  </body>
+</html>

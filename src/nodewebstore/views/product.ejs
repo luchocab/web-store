@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= product.name %></title>
+</head>
+<body>
+<h2>nombre: <%= product.name %></h2>
+<h2>descripcion: <%= product.description %></h2>
+<h2>autor: <%= product.author.username %></h2>
+<form method="post" action="/product/delete?_method=DELETE">
+  <input type="hidden" name="id" value="<%= product.id %>" >
+  <input type="submit" value="Borrar">
+</form>
+</body>
+</html>
