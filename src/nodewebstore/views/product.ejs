@@ -1,15 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <title><%= product.name %></title>
+  <% include ../partials/head.ejs %>
 </head>
 <body>
-<h2>nombre: <%= product.name %></h2>
-<h2>descripcion: <%= product.description %></h2>
-<h2>autor: <%= product.author.username %></h2>
-<form method="post" action="/product/delete?_method=DELETE">
-  <input type="hidden" name="id" value="<%= product.id %>" >
-  <input type="submit" value="Borrar">
-</form>
+<div class="container">
+  <% include ../partials/nav.ejs %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= product.name %></h3>
+    </div>
+    <div class="panel-body">
+      <h2>Nombre</h2> <%= product.name %>
+      <h2>Descripcion</h2> <%= product.description %>
+      <h2>Autor</h2> <%= product.author.username %>
+      <!--<form method="post" action="/product/delete?_method=DELETE">-->
+        <!--<input type="hidden" name="id" value="<%= product.id %>" >-->
+        <!--<input type="submit" value="Borrar">-->
+      <!--</form>-->
+      <form method="POST" action="/product/comment/new">
+        <input type="hidden" name="p_id" value="<%= product.id %>" >
+        <input type="hidden" name="author" value="<%= userId%>">
+      <textarea class="form-control" rows="3" name="body"></textarea>
+      <button type="submit" class="btn btn-primary">Guardar comentario</button>
+      </form>
+      <div class="panel-footer">
+        <% for(var i = 0; i< product.comments.length; i++){ %>
+          <h6><%= product.comments[i].body %> </h6>
+          <h6><%= product.comments[i].author.username %> </h6>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <% include ../partials/footer.ejs %>
+  <% include ../partials/scripts.ejs %>
+</div>
+</body>
+</html>
+
+
 </body>
 </html>

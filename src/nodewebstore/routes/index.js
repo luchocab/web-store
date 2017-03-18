@@ -10,7 +10,6 @@ var Product = require('../models/Product');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  // console.log("home Page user: " + res.locals.user);
   Product.find({}, function (err, data) {
     if(err)
       return res.redirect("/error");

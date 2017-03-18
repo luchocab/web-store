@@ -19,7 +19,6 @@ var commentRouter = require('./routes/comment');
 
 //models
 var User = require('./models/User');
-var Comment = require('./models/Comment');
 
 
 //mongosee conect
@@ -72,8 +71,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/comment', commentRouter);
 app.use('/product', productRouter);
+app.use('/product/comment', commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

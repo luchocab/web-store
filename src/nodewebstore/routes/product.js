@@ -6,9 +6,7 @@ var urlParser = bodyParser.urlencoded({ extended:true });
 var methodOverride = require('method-override');
 router.use(methodOverride('_method'));
 
-var isLoggedIn = require('../middleware').isLoggedIn;
-var isProductOwner = require('../middleware').isProductOwner;
-var isCommentOwner = require('../middleware').isCommentOwner;
+var middleware = require('../middleware');
 
 /* GET productRouter listing. */
 router.get('/', function(req, res, next) {
@@ -19,15 +17,15 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.post('/', isLoggedIn, function(req, res, next) {
+router.post('/', middleware.isLoggedIn, function(req, res, next) {
   res.send('post products');//TODO
 });
 
-router.get('/new', isLoggedIn, function(req, res, next) {
+router.get('/new', middleware.isLoggedIn, function(req, res, next) {
   res.render('new', {userId: req.user.id, status : 200});
 });
 
-router.post('/new',isLoggedIn, urlParser, function(req, res, next) {
+router.post('/new', middleware.isLoggedIn, urlParser, function(req, res, next) {
   Product.create(req.body, function (err, product) {
     if(err)
       return res.redirect("/error");
@@ -69,10 +67,17 @@ router.delete('/:id',urlParser, function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  Product.findOne({'_id' : req.params.id}).populate('author').exec(function (err, product) {
+  Product.findOne({'_id' : req.params.id}).populate('author comments').exec(function (err, prod) {
+    var author = {
+      path: 'comments.author',
+      model: 'User'
+    };
     if(err)
       return res.redirect("error");
-    res.render('product', {product});
+    Product.populate(prod, author, function (err, product) {
+      res.render('product', {userId: req.user.id, product: product});
+    });
+
   });
 });
 

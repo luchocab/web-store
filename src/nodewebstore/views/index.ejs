@@ -11,12 +11,17 @@
         <div class="row">
           <% for(var i = 0; i<products.length; i++){ %>
           <div class="col-xs-6 col-md-4">
-            <h2><a href="/product/<%= products[i].id %>"><%= products[i].name %></a></h2>
-            <a href="#" class="thumbnail"><img src="http://placehold.it/171x180" ></a>
+              <div class="thumbnail">
+                  <img src="http://placehold.it/242x200" >
+                  <div class="caption">
+                      <h3><%= products[i].name %></h3>
+                      <p>$ <%= products[i].price %></p>
+                      <p><a href="/product/<%= products[i].id %>" class="btn btn-primary" role="button">Mas info</a></p>
+                  </div>
+              </div>
           </div>
           <% } %>
         </div>
-      <!--<% include ../partials/3columns.ejs %>-->
       <% include ../partials/footer.ejs %>
       <% include ../partials/scripts.ejs %>
     </div>
