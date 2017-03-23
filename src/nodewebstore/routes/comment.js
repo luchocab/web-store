@@ -36,7 +36,7 @@ router.post('/new',middleware.isLoggedIn, urlParser, function(req, res, next) {
 });
 
 router.put('/', urlParser, function (req, res, next) {
-    Comment.findByIdAndUpdate(req.body.id,{$set:req.body}, function(err, result){
+    Comment.findByIdAndUpdate(req.body.c_id,{$set:req.body}, function(err, result){
         if(err)
             return res.redirect("/error");
         res.send('comentario modificado');
