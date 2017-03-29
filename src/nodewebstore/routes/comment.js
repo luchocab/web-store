@@ -12,7 +12,7 @@ var urlParser = bodyParser.urlencoded({ extended:true });
 var Product = require('../models/Product');
 var Comment = require('../models/Comment');
 
-router.post('/new',middleware.isLoggedIn, urlParser, function(req, res, next) {
+router.post('/new',middleware.isLoggedIn, urlParser, function(req, res) {
     var com={
         author:req.body.author,
         body:req.body.body
@@ -30,19 +30,19 @@ router.post('/new',middleware.isLoggedIn, urlParser, function(req, res, next) {
     });
 });
 
-router.put('/', middleware.isProductOwner, urlParser, function (req, res, next) {
+router.put('/', middleware.isCommentOwner, urlParser, function (req, res) {
     Comment.findByIdAndUpdate(req.body.c_id,{$set:req.body}, function(err, result){
         if(err)
             return res.redirect("/error");
-        // res.json({success : "Delete Successfully", status : 200});
+         //res.json({success : "Modify Successfully", status : 200});
     });
 });
 
-router.delete('/', middleware.isLoggedIn, urlParser, function(req, res, next) {
+router.delete('/', middleware.isCommentOwner, urlParser, function(req, res) {
     Comment.findByIdAndRemove({'_id' : req.body.c_id}, function (err, prod) {
         if(err)
             return res.redirect("/error");
-        res.json({success : "Delete Successfully", status : 200});
+        // res.json({success : "Delete Successfully", status : 200});
     })
 });
 
