@@ -33,10 +33,10 @@
             <!--</div>-->
           </div>
           <div class="post-footer">
-            <% if (userId) {%>
+            <% if (user) {%>
             <div class="input-group">
               <input type="hidden" id="p_id" value="<%= product.id %>" >
-              <input type="hidden" id="author" value="<%= userId%>">
+              <input type="hidden" id="author" value="<%= user.id%>">
               <input class="form-control" placeholder="Agregar comentario" type="text" name="body" id="body">
                     <span class="input-group-addon">
                         <a onclick="saveComment()"><i class="glyphicon glyphicon-floppy-disk"></i></a>
@@ -53,7 +53,7 @@
                   <div class="comment-heading">
                     <h4 class="user"><%= product.comments[i].author.username %></h4>
                     <h5 class="time">5 minutes ago</h5>
-                    <a onclick="removeComment('<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
+                    <a onclick="removeComment('<%= product.id %>' , '<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
                     <a onclick="editCommentToggle('<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                   </div>
                   <div class="comment-content" id="commentContent">
@@ -79,10 +79,13 @@
 </body>
 
 <script>
-  function removeComment(id){
+  function removeComment(id, c_id){
     $.ajax({
-      data: {id: id},
-      url: '/product/comment/delete?_method=DELETE',
+      data: {
+        c_id: c_id,
+        _method: 'DELETE'
+      },
+      url: '/product/' + id + '/comment/',
       type: 'post',
       timeout: 1000,
       success:  function (response) {
@@ -98,7 +101,7 @@
         author: $("#author").val(),
         body: $("#body").val()
       },
-      url: '/product/comment/new',
+      url: '/product/'+ $("#p_id").val() +'/comment/new',
       type: 'post',
       timeout: 1000,
       success:  function (response) {
@@ -109,10 +112,12 @@
   function editComment(id) {
     $.ajax({
       data: {
+        id: $("#p_id").val(),
         c_id: id,
-        body: $("#body"+id).val()
+        body: $("#body"+id).val(),
+        _method: 'PUT'
       },
-      url: '/product/comment/?_method=PUT',
+      url: '/product/' + $("#p_id").val() + '/comment/',
       type: 'post',
       timeout: 1000,
       success:  function (response) {

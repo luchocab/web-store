@@ -7,8 +7,6 @@ var router = express.Router();
 var middleware = require('../middleware');
 var bodyParser = require('body-parser');
 var urlParser = bodyParser.urlencoded({ extended:true });
-var methodOverride = require('method-override');
-router.use(methodOverride('_method'));
 
 //models
 var Product = require('../models/Product');
@@ -19,15 +17,12 @@ router.post('/new',middleware.isLoggedIn, urlParser, function(req, res, next) {
         author:req.body.author,
         body:req.body.body
     };
-    console.log(com);
     Product.findById(req.body.p_id, function (err, product) {
         if(err)
             return res.redirect("/error");
-        console.log(product);
         Comment.create(com, function (err, comment) {
             if(err)
                 return res.redirect("/error");
-
             product.comments.unshift(comment);
             product.save();
             res.send('comentario guardado');
@@ -35,16 +30,16 @@ router.post('/new',middleware.isLoggedIn, urlParser, function(req, res, next) {
     });
 });
 
-router.put('/', urlParser, function (req, res, next) {
+router.put('/', middleware.isProductOwner, urlParser, function (req, res, next) {
     Comment.findByIdAndUpdate(req.body.c_id,{$set:req.body}, function(err, result){
         if(err)
             return res.redirect("/error");
-        res.send('comentario modificado');
+        // res.json({success : "Delete Successfully", status : 200});
     });
 });
 
-router.delete('/:id',urlParser, function(req, res, next) {
-    Comment.findByIdAndRemove({'_id' : req.body.id}, function (err, prod) {
+router.delete('/', middleware.isLoggedIn, urlParser, function(req, res, next) {
+    Comment.findByIdAndRemove({'_id' : req.body.c_id}, function (err, prod) {
         if(err)
             return res.redirect("/error");
         res.json({success : "Delete Successfully", status : 200});
@@ -52,7 +47,7 @@ router.delete('/:id',urlParser, function(req, res, next) {
 });
 
 /* GET commentRouter page. */
-router.get('/:id', function(req, res, next) {
+router.get('/:c_id', function(req, res, next) {
     res.send('comment');
 });
 

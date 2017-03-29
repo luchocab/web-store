@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var methodOverride = require('method-override');
 
 //passport
 var passport = require('passport');
@@ -19,7 +20,6 @@ var commentRouter = require('./routes/comment');
 
 //models
 var User = require('./models/User');
-
 
 //mongosee conect
 mongoose.connect('mongodb://localhost/nodewebstore');
@@ -56,8 +56,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// RUTAS
-var urlParser = bodyParser.urlencoded({ extended:true });
 /*  =========================
  FIN - PASSPORT CONFIG
  =========================*/
@@ -67,12 +65,21 @@ var urlParser = bodyParser.urlencoded({ extended:true });
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    console.log('entrooo method override');
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/product', productRouter);
-app.use('/product/comment', commentRouter);
+app.use('/product/:id/comment', commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
