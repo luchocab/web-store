@@ -8,8 +8,10 @@
     <div class="container">
         <% include ../partials/nav.ejs %>
         <div class="col-md-12">
-            <div class="panel panel-grey post panel-shadow" style="max-height: 700px; overflow-y: scroll">
-              <h1>Productos</h1>
+            <!--<div class="panel panel-grey post panel-shadow" style="max-height: 700px; overflow-y: scroll">-->
+            <div class="row text-center">
+                <h2>Productos</h2>
+            </div>
                 <div class="row">
                   <% for(var i = 0; i<products.length; i++){ %>
                     <div class="col-lg-3 col-xs-6 col-md-4">
@@ -20,7 +22,7 @@
                             <div class="caption">
                                 <div class="blur"></div>
                                 <div class="caption-text">
-                                    <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;"><%= products[i].name %></h3>
+                                    <h3><%= products[i].name %></h3>
                                     <p><%= products[i].description %></p>
                                     <a class=" btn btn-default" href="/product/<%= products[i].id %>"><span class="glyphicon glyphicon-plus"> INFO</span></a>
                                 </div>
@@ -29,7 +31,7 @@
                     </div>
                   <% } %>
                 </div>
-            </div>
+            <!--</div>-->
         </div>
       <% include ../partials/footer.ejs %>
       <% include ../partials/scripts.ejs %>

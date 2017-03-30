@@ -7,71 +7,82 @@
 <body>
 <div class="container">
   <% include ../partials/nav.ejs %>
-  <div class="col-md-12">
-        <div class="panel panel-grey post panel-shadow">
-          <div class="post-heading">
-            <div class="pull-left image">
-              <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
-            </div>
-            <div class="pull-left meta">
-              <div class="title h5">
-                <a href="#">creado por <b><%= product.author.username %></b></a>
-              </div>
-              <h6 class="text-muted time">1 minute ago</h6>
-            </div>
-          </div>
-          <div class="post-description">
-            <p>nombre: <%= product.name %></p>
-            <p><%= product.description %></p>
-            <!--<div class="stats">-->
-              <!--<a href="#" class="btn btn-default stat-item">-->
-                <!--<i class="fa fa-thumbs-up icon"></i>2-->
-              <!--</a>-->
-              <!--<a href="#" class="btn btn-default stat-item">-->
-                <!--<i class="fa fa-share icon"></i>12-->
-              <!--</a>-->
-            <!--</div>-->
-          </div>
-          <div class="post-footer">
-            <% if (user) {%>
-            <div class="input-group">
-              <input type="hidden" id="p_id" value="<%= product.id %>" >
-              <input type="hidden" id="author" value="<%= user.id%>">
-              <input class="form-control" placeholder="Agregar comentario" type="text" name="body" id="body">
+  <div class="row prod">
+    <div class="col-xs-offset-1 col-xs-4 item-photo">
+      <img style="max-width:100%;" src="https://ak1.ostkcdn.com/images/products/8818677/Samsung-Galaxy-S4-I337-16GB-AT-T-Unlocked-GSM-Android-Cell-Phone-85e3430e-6981-4252-a984-245862302c78_600.jpg" />
+    </div>
+    <div class="col-xs-5" style="border:0px solid gray">
+      <!-- Datos del autor y titulo del producto -->
+      <h3><%= product.name %></h3>
+      <div class="create-by">
+        <div class="pull-left image">
+          <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+        </div>
+        <div class="pull-left meta">
+          <h5>creado por <strong><%= product.author.username %></strong></h5>
+          <h6 class="text-muted time">1 minute ago</h6>
+        </div>
+        <!--<h5>creado por <strong><%= product.author.username %></strong> </h5> · <h6 class="text-muted time">1 minute ago</h6>-->
+      </div>
+
+
+      <!-- Precios -->
+      <h6 class="title-price"><small>PRECIO</small></h6>
+      <h3 style="margin-top:0px;">$  <%= product.price %></h3>
+
+      <!-- Detalles especificos del producto -->
+      <div class="section">
+        <h6 class="title-attr" style="margin-top:15px;" ><small>DESCRIPCION</small></h6>
+        <div>
+          <div class="attr"><%= product.description %></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comentarios -->
+    <div class="col-xs-offset-1 col-xs-9">
+      <div class="section-comment" style="width:100%;border-top:1px solid silver">
+        <div class="post-footer">
+          <% if (user) {%>
+          <div class="input-group">
+            <input type="hidden" id="p_id" value="<%= product.id %>" >
+            <input type="hidden" id="author" value="<%= user.id%>">
+            <input class="form-control add-comment" placeholder="Agregar comentario" type="text" name="body" id="body">
                     <span class="input-group-addon">
                         <a onclick="saveComment()"><i class="glyphicon glyphicon-floppy-disk"></i></a>
                     </span>
-            </div>
-            <%}%>
-            <ul class="comments-list">
-              <% for(var i = 0; i< product.comments.length; i++){ %>
-              <li class="comment">
-                <a class="pull-left" href="#">
-                  <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
-                </a>
-                <div class="comment-body">
-                  <div class="comment-heading">
-                    <h4 class="user"><%= product.comments[i].author.username %></h4>
-                    <h5 class="time">5 minutes ago</h5>
-                    <a onclick="removeComment('<%= product.id %>' , '<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
-                    <a onclick="editCommentToggle('<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                  </div>
-                  <div class="comment-content" id="commentContent">
-                    <p id="commentP<%= product.comments[i].id %>"><%= product.comments[i].body %></p>
-                    <div id="commentE<%= product.comments[i].id%>" class="input-group" style="display: none">
-                      <input class="form-control input-sm" placeholder="Editar comentario" type="text" id="body<%= product.comments[i].id%>" value="<%= product.comments[i].body %>">
+          </div>
+          <%}%>
+          <ul class="comments-list">
+            <% for(var i = 0; i< product.comments.length; i++){ %>
+            <li class="comment">
+              <a class="pull-left" href="#">
+                <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+              </a>
+              <div class="comment-body">
+                <div class="comment-heading">
+                  <h4 class="user"><%= product.comments[i].author.username %></h4>
+                  <h5 class="time">5 minutes ago</h5>
+                  <a onclick="removeComment('<%= product.id %>' , '<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
+                  <a onclick="editCommentToggle('<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                </div>
+                <div class="comment-content" id="commentContent">
+                  <p id="commentP<%= product.comments[i].id %>"><%= product.comments[i].body %></p>
+                  <div id="commentE<%= product.comments[i].id%>" class="input-group" style="display: none">
+                    <input class="form-control input-sm" placeholder="Editar comentario" type="text" id="body<%= product.comments[i].id%>" value="<%= product.comments[i].body %>">
                        <span class="input-group-addon">
                         <a onclick="editComment('<%= product.comments[i].id %>')"><i class="glyphicon glyphicon-floppy-disk"></i></a>
                     </span>
-                    </div>
-
                   </div>
+
                 </div>
-              </li>
-              <% } %>
-            </ul>
-          </div>
+              </div>
+            </li>
+            <% } %>
+          </ul>
         </div>
+      </div>
+    </div>
   </div>
   <% include ../partials/footer.ejs %>
   <% include ../partials/scripts.ejs %>
