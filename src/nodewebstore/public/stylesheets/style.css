@@ -1,6 +1,7 @@
 body {
   overflow: hidden;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 70px;
 }
 /* Start by setting display:none to make this hidden.
    Then we position it in relation to the viewport window
@@ -33,6 +34,15 @@ body.loading .my-modal {
   display: block;
 }
 
+/*ALERT*/
+.alert-fixed {
+  position:fixed;
+  top: 54px;
+  left: 0px;
+  width: 100%;
+  z-index:9999;
+  border-radius:0px
+}
 
 /*INI-comments*/
 
@@ -168,3 +178,93 @@ body.loading .my-modal {
   display: none;
 }
 /*FIN- comments*/
+
+/*INI - Index */
+.cuadro_intro_hover{
+  padding: 0px;
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+.cuadro_intro_hover:hover .caption{
+  opacity: 1;
+  transform: translateY(-150px);
+  -webkit-transform:translateY(-150px);
+  -moz-transform:translateY(-150px);
+  -ms-transform:translateY(-150px);
+  -o-transform:translateY(-150px);
+}
+.cuadro_intro_hover img{
+  height: 200px !important;
+  z-index: 4;
+}
+.cuadro_intro_hover .caption{
+  position: absolute;
+  top:150px;
+  -webkit-transition:all 0.3s ease-in-out;
+  -moz-transition:all 0.3s ease-in-out;
+  -o-transition:all 0.3s ease-in-out;
+  -ms-transition:all 0.3s ease-in-out;
+  transition:all 0.3s ease-in-out;
+  width: 100%;
+}
+.cuadro_intro_hover .blur{
+  background-color: rgba(0,0,0,0.7);
+  height: 300px;
+  z-index: 5;
+  position: absolute;
+  width: 100%;
+}
+.cuadro_intro_hover .caption-text{
+  z-index: 10;
+  color: #fff;
+  position: absolute;
+  height: 300px;
+  text-align: center;
+  top:-20px;
+  width: 100%;
+}
+
+/*INI - navBar*/
+#login-dp{
+  min-width: 250px;
+  padding: 14px 14px 0;
+  overflow:hidden;
+  background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+  font-size:12px
+}
+#login-dp .bottom{
+  background-color:rgba(255,255,255,.8);
+  border-top:1px solid #ddd;
+  clear:both;
+  padding:14px;
+}
+#login-dp .social-buttons{
+  margin:12px 0
+}
+#login-dp .social-buttons a{
+  width: 49%;
+}
+#login-dp .form-group {
+  margin-bottom: 10px;
+}
+#login-dp .navbar-login {
+  width: 305px;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+#login-dp .icon-size {
+  font-size: 87px;
+}
+@media(max-width:768px){
+  #login-dp{
+    background-color: inherit;
+    color: #fff;
+  }
+  #login-dp .bottom{
+    background-color: inherit;
+    border-top:0 none;
+  }
+}

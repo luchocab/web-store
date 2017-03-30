@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   Product.find({}, function (err, data) {
     if(err)
       return res.redirect("/error");
-    res.render("index", {title: 'Express', products: data});
+    res.render("index", {products: data});
   });
 });
 
@@ -53,12 +53,12 @@ router.post('/login', urlParser, passport.authenticate('local', {
 
 // Logout
 router.get('/logout', function(req, res){
-  console.log('logout');
   req.logout();
+  req.session.destroy();
   Product.find({}, function (err, data) {
     if(err)
       return res.redirect("/error");
-  res.render('index', { title: 'deslogueado', logout : true,products: data});
+    res.json({success : "Logout Successfully", status : 200});
   });
 });
 

@@ -1,6 +1,6 @@
 <! — views/partials/nav.ejs → >
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -17,45 +17,73 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Inicio <span class="sr-only">(current)</span></a></li>
                 <li id="my-products"><a id="my-prod-link" href="/product">Mis Productos</a></li>
-                <!--<li class="dropdown">-->
-                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
-                    <!--<ul class="dropdown-menu">-->
-                        <!--<li><a href="#">Action</a></li>-->
-                        <!--<li><a href="#">Another action</a></li>-->
-                        <!--<li><a href="#">Something else here</a></li>-->
-                        <!--<li role="separator" class="divider"></li>-->
-                        <!--<li><a href="#">Separated link</a></li>-->
-                        <!--<li role="separator" class="divider"></li>-->
-                        <!--<li><a href="#">One more separated link</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><button type="button" id="register-btn" class="btn btn-default navbar-btn btn-xs" onclick="location.href='/register';">Registrarse</button></li>
-                <li><button type="button" id="login-btn" class="btn btn-default navbar-btn btn-xs" onclick="location.href='/login';">Iniciar Sesion</button></li>
-                <% if(user){%>
-                    <p class="navbar-text"> Bienvenido <strong> <%= user.username %></strong>! </p>
+                <% if(user){ %>
+                <li><p class="navbar-text">Bienvenido </p></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span> 
+                        <strong><%= user.username %></strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul id="login-dp" class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong><%= user.username %></strong></p>
+                                    </div>
+                                    <div class="bottom text-center">
+                                        <p><a id="logout-btn" onclick="logout()" class="btn btn-danger btn-block">Cerrar Sesion</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <%}else{%>
+                    <li><p class="navbar-text">Todavia no tienes una cuenta?</p></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Iniciar Sesion</b> <span class="caret"></span></a>
+                        <ul id="login-dp" class="dropdown-menu">
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <% include ../views/login.ejs %>
+                                    </div>
+                                    <div class="bottom text-center">
+                                        Nuevo aqui? <a id="register-btn" href="/register"><b>Registrarse</b></a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </li>
                 <%}%>
-                <button type="button" id="logout-btn" class="btn btn-default navbar-btn btn-xs" onclick="location.href='/logout';">Cerrar Sesion</button>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-<div class="alert alert-success alert-dismissible collapse" id="login-alert" role="alert" >
+<div class="alert alert-success alert-dismissible alert-fixed text-center collapse" id="login-alert" role="alert" >
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     Bienvenido!! Te has logueado correctamente.
 </div>
-<div class="alert alert-warning alert-dismissible collapse" id="logout-alert" role="alert" >
+<div class="alert alert-warning alert-dismissible alert-fixed text-center collapse" id="logout-alert" role="alert" >
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     Se ha deslogueado correctamente. Hasta Luego!
 </div>
 <script>
+
     <% if(user){%>
-        loginBtn(true);
             $("#my-products").removeClass('disabled');
             $("#my-prod-link").unbind('click', false);
     <%}else{%>
-        loginBtn(false);
             $("#my-products").addClass('disabled');
             $("#my-prod-link").bind('click', false);
     <%}%>
@@ -65,22 +93,5 @@
         $("#login-alert").slideUp(500);
     });
     <%}%>
-    <% if(locals.logout){%>
-    loginBtn(false);
-    $("#logout-alert").show().fadeTo(2000, 500).slideUp(500, function(){
-        $("#logout-alert").slideUp(500);
-    });
-    <%}%>
 
-    function loginBtn(isLogin) {
-        if(isLogin){
-            $("#login-btn").hide();
-            $("#register-btn").hide();
-            $("#logout-btn").show();
-        }else{
-            $("#login-btn").show();
-            $("#register-btn").show();
-            $("#logout-btn").hide();
-        }
-    }
 </script>
