@@ -1,5 +1,5 @@
 body {
-  overflow: hidden;
+  overflow: auto;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   padding-top: 70px;
 }
@@ -60,6 +60,7 @@ body.loading .my-modal {
   -o-transform:translateY(-150px);
 }
 .cuadro_intro_hover img{
+  display: -webkit-inline-box;
   height: 200px !important;
   z-index: 4;
 }

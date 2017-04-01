@@ -9,7 +9,7 @@
   <% include ../partials/nav.ejs %>
   <div class="row prod">
     <div class="col-xs-offset-1 col-xs-4 item-photo">
-      <img style="max-width:100%;" src="https://ak1.ostkcdn.com/images/products/8818677/Samsung-Galaxy-S4-I337-16GB-AT-T-Unlocked-GSM-Android-Cell-Phone-85e3430e-6981-4252-a984-245862302c78_600.jpg" />
+      <img style="max-width:100%;" src="<%= product.img%>" onerror="this.src='/images/img-not-found02.jpg'" />
     </div>
     <div class="col-xs-5" style="border:0px solid gray">
       <!-- Datos del autor y titulo del producto -->
@@ -63,8 +63,8 @@
                 <div class="comment-heading">
                   <h4 class="user"><%= product.comments[i].author.username %></h4>
                   <h5 class="time">5 minutes ago</h5>
-                  <a onclick="removeComment('<%= product.id %>' , '<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
-                  <a onclick="editCommentToggle('<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                  <a class="c-b" onclick="removeComment('<%= product.id %>' , '<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>
+                  <a class="c-b" onclick="editCommentToggle('<%= product.comments[i].id %>')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                 </div>
                 <div class="comment-content" id="commentContent">
                   <p id="commentP<%= product.comments[i].id %>"><%= product.comments[i].body %></p>
@@ -141,5 +141,15 @@
     $("#commentP"+id).toggle();
     $("#commentE"+id).toggle();
   }
+
+  <% if(user){%>
+  $(".c-b").removeClass('disabled');
+  $(".c-b").unbind('click', false);
+  <%}else{%>
+  $(".c-b").addClass('disabled');
+  $(".c-b").bind('click', false);
+  <%}%>
+
+
 </script>
 </html>

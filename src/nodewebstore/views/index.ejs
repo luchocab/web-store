@@ -8,17 +8,17 @@
     <div class="container">
         <% include ../partials/nav.ejs %>
         <div class="col-md-12">
-            <!--<div class="panel panel-grey post panel-shadow" style="max-height: 700px; overflow-y: scroll">-->
             <div class="row text-center">
                 <h2>Productos</h2>
             </div>
                 <div class="row">
                   <% for(var i = 0; i<products.length; i++){ %>
                     <div class="col-lg-3 col-xs-6 col-md-4">
-                        <div class="cuadro_intro_hover " style="background-color:#cccccc;">
+                        <div class="cuadro_intro_hover ">
                             <p style="text-align:center;">
-                                <img src="/images/anonymous_2.jpg" class="img-responsive" alt="">
+                                <img src="<%= products[i].img%>" class="img-responsive" alt="" onerror="this.src='/images/img-not-found01.jpg'">
                             </p>
+
                             <div class="caption">
                                 <div class="blur"></div>
                                 <div class="caption-text">
@@ -31,7 +31,6 @@
                     </div>
                   <% } %>
                 </div>
-            <!--</div>-->
         </div>
       <% include ../partials/footer.ejs %>
       <% include ../partials/scripts.ejs %>
