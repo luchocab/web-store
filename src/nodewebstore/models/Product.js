@@ -8,6 +8,7 @@ var Product = new Schema({
     name : {type: String, required: true},
     description : {type: String, required: true},
     price : {type: Number, required: true},
+    img : {type: String},
     author : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

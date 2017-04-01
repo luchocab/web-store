@@ -6,18 +6,53 @@
     <body>
         <div class="container">
             <% include ../partials/nav.ejs %>
-            <h1>Formulario de registro</h1>
-              <form action="/register" method="POST">
-                <div class="form-group">
-                  <label for="name">Nombre</label>
-                  <input type="text" class="form-control" id="username" name = "username" placeholder="Username">
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" name = "password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-default">Registrar</button>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+              <form action="/register" method="POST" role="form">
+                  <h2>Formulario de registro</h2>
+                  <hr/>
+                  <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <input type="text" name="name" id="name" class="form-control input-lg" placeholder="Nombre" tabindex="1">
+                          </div>
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <input type="text" name="lastName" id="lastName" class="form-control input-lg" placeholder="Apellido" tabindex="2">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Usuario" tabindex="3">
+                  </div>
+                  <div class="form-group">
+                      <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Contraseña" tabindex="3">
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-6 col-sm-3 col-xs-offset-3">
+                          <div class="col-xs-offset-5">
+                              <img class="avatar" style="margin: 25px 0" id="avatarImg" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                          </div>
+                          <a class="btn btn-primary btn-select btn-select-light">
+                              <input type="hidden" class="btn-select-input" id="avatar" name="avatar" value="" />
+                              <span class="btn-select-value">Seleccionar Avatar</span>
+                              <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                              <ul>
+                                  <li>Avatar 01</li>
+                                  <li>Avatar 02</li>
+                                  <li>Avatar 03</li>
+                                  <li>Avatar 04</li>
+                              </ul>
+                          </a>
+                      </div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                      <div class="col-xs-6 col-md-6 col-xs-offset-2"><input type="submit" value="Registrar" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                  </div>
               </form>
+            </div>
             <% include ../partials/footer.ejs %>
             <% include ../partials/scripts.ejs %>
         </div>

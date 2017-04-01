@@ -33,11 +33,12 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                            <img class="avatar" style="height: 87px" id="avatarImg" src="<%= user.avatar %>" alt="avatar">
+                                            <!--<span class="glyphicon glyphicon-user icon-size"></span>-->
                                         </p>
                                     </div>
                                     <div class="col-lg-8">
-                                        <p class="text-left"><strong><%= user.username %></strong></p>
+                                        <p class="text-left"><strong><%= user.name %> <%= user.lastName %></strong></p>
                                     </div>
                                     <div class="bottom text-center">
                                         <p><a id="logout-btn" onclick="logout()" class="btn btn-danger btn-block">Cerrar Sesion</a></p>

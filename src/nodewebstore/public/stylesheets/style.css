@@ -152,7 +152,7 @@ body.loading .my-modal {
   .section{width:104%;}
   .menu-items{padding-left:0px;}
 }
-
+.avatar_logged{height: 87px;}
 .prod ul > li{margin-right:25px;font-weight:lighter;cursor:pointer}
 .prod li.active{border-bottom:3px solid silver;}
 
@@ -180,3 +180,7 @@ body.loading .my-modal {
 
 .section-comment .post-footer .add-comment{background-color: #f8f9f9;}
 .edit-none{display: none;}
+
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }

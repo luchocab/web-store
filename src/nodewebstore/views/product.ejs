@@ -16,7 +16,7 @@
       <h3><%= product.name %></h3>
       <div class="create-by">
         <div class="pull-left image">
-          <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+          <img src="<%= product.author.avatar %>" class="img-circle avatar" alt="user profile image">
         </div>
         <div class="pull-left meta">
           <h5>creado por <strong><%= product.author.username %></strong></h5>
@@ -57,7 +57,7 @@
             <% for(var i = 0; i< product.comments.length; i++){ %>
             <li class="comment">
               <a class="pull-left" href="#">
-                <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                <img class="avatar" src="<%= product.comments[i].author.avatar %>" alt="avatar">
               </a>
               <div class="comment-body">
                 <div class="comment-heading">
